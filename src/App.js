@@ -1,24 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
+import SignIn from './Component/SignIn';
+import Storage from './Component/Storage';
+import Shared from './Component/Shared';
+import Recieve from './Component/Recieve';
+import Login from './Component/Login';
+import {Switch, Route, Redirect} from 'react-router-dom';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+        <Route path="/home"  component={() => <SignIn />}/>
+        <Route exact path="/shared" component={() => <Shared />} />
+        <Route exact path="/recieved" component={() => <Recieve />} />
+        <Route exact path="/storage" component={() => <Storage />} />
+        <Route exact path="/login" component={() => <Login />} />
+        <Redirect to="/login" />
+    </Switch>
   );
 }
 
