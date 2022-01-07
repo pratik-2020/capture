@@ -65,7 +65,7 @@ function Recieve(){
     const [friends, setFriends] = useState([]);
     const handleLogout = () => {
         localStorage.removeItem('usercap');
-        window.location = 'http://localhost:3000/login';
+        window.location = 'https://capture-img.herokuapp.com/login';
     }
     const retrieveusers = () => {
         let d = [];
