@@ -28,7 +28,7 @@ function Shared(props){
     const [fnd, setFnd] = useState("");
     const retrievefrnd = () => {
         let d = [];
-        axios.post('http://localhost:3001/getfrnd', {
+        axios.post('https://capture-img-server.herokuapp.com/getfrnd', {
             user: localStorage.getItem('usercap')
         }).then((response) => {
             response.data.map((e,key) => {
@@ -64,7 +64,7 @@ function Shared(props){
                     <BreadcrumbItem><a href="/recieved">Friends</a></BreadcrumbItem>
                     <BreadcrumbItem><Button className="btn btn-danger " onClick={() => {
                             localStorage.removeItem('usercap');
-                            window.location = 'https://capture-img.herokuapp.com/login';
+                            window.location = 'http://localhost:3000/login';
                     }} >Logout</Button></BreadcrumbItem>
                 </Breadcrumb>
                 <br></br>
@@ -86,7 +86,7 @@ function Shared(props){
                                                     console.log(fl);
                                                     let f = fle;
                                                     let g = cap;
-                                                    axios.post('http://localhost:3001/shareimg', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/shareimg', {
                                                         sender: localStorage.getItem('usercap'),
                                                         reciever: e.name,
                                                         caption: g,
@@ -121,7 +121,7 @@ function Shared(props){
                                             <ListGroupItemHeading><Button style={{backgroundColor:'white', border:'0px', color:"black"}} onClick={() => {
                                                 setFnd(e.name);
                                                 console.log(fnd);
-                                                axios.post('http://localhost:3001/retrieveshared', {
+                                                axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
                                                     sender: localStorage.getItem('usercap'),
                                                     reciever: e.name
                                                 }).then((response) => {
@@ -129,7 +129,7 @@ function Shared(props){
                                                     response.data.map((e, key) => {
                                                         g.push(e);
                                                     })
-                                                    axios.post('http://localhost:3001/retrieveshared', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
                                                         sender: e.name,
                                                         reciever: localStorage.getItem('usercap')
                                                     }).then((rep) => {
@@ -138,7 +138,7 @@ function Shared(props){
                                                         })
                                                         setChat(g);
                                                     })
-                                                    axios.post('http://localhost:3001/msg/seen', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/msg/seen', {
                                                         reciever: localStorage.getItem('usercap'),
                                                         sender: e.name
                                                     }).then((response) => {
@@ -170,21 +170,18 @@ function Shared(props){
                                                     }
                                                 }}`, color: 'black' }}>
                                                     <CardHeader>
-                                                        <CardImg src={'http://localhost:3001/uploads/'+e.img} />
+                                                        <CardImg src={'https://capture-img-server.herokuapp.com/uploads/'+e.img} />
                                                     </CardHeader>
                                                     <CardBody>
                                                         <h4 className='h4'>
                                                             {e.caption}
                                                         </h4>
-                                                        <div style={{marginRight:'0px'}}>
-                                                            {e.seen}
-                                                        </div>
                                                     </CardBody>
                                                     <CardFooter>
                                                         <div className = 'row justify-content-center'>
                                                             <div className='col-4'>
                                                             <FaShareAlt onClick={() => {
-                                                                axios.post('http://localhost:3001/getfrnd', {
+                                                                axios.post('https://capture-img-server.herokuapp.com/getfrnd', {
                                                                     user: localStorage.getItem('usercap')
                                                                 }).then((response) => {
                                                                     let f = []
@@ -200,13 +197,16 @@ function Shared(props){
                                                             </div>
                                                             <div className='col-4'>
                                                                 <BsFillArchiveFill onClick={() => {
-                                                                    axios.post('http://localhost:3001/delete/cht', {
+                                                                    axios.post('https://capture-img-server.herokuapp.com/delete/cht', {
                                                                         chtid: e.chtid
                                                                     }).then((response) => {
                                                                         alert(response.data);
                                                                     });
                                                                 }}  />
                                                             </div>
+                                                            <div className='col-4' style={{marginRight:'0px'}}>
+                                                            <h5>Seen : </h5>{e.seen}
+                                                        </div>
                                                         </div>
                                                     </CardFooter>
                                                 </Card>

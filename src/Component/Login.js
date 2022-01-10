@@ -11,16 +11,17 @@ function Login(){
     const [password, setPassword] = useState("");
     const [retpass, setRetpass] = useState("");
     const handleLogin = () => {
-        axios.post('http://localhost:3001/login', {
+        axios.post('https://capture-img-server.herokuapp.com/login', {
             user: email,
             pass: password
         }).then((response) => {
+            alert(response.data);
             if(response.data === 'User can proceed!!!'){
                 localStorage.setItem('usercap', email);
-                window.location = 'https://capture-img.herokuapp.com/storage';
+                window.location = 'http://localhost:3000/storage';
             }
             else{
-                window.location = 'https://capture-img.herokuapp.com/err';
+                window.location = 'http://localhost:3000/err';
             }
         })
     }
@@ -82,7 +83,7 @@ function Login(){
                             <br></br>
                             <div className="col-10 col-sm-5">
                                 <Button onClick={() => {
-                                    window.location = 'https://capture-img.herokuapp.com/home'
+                                    window.location = 'http://localhost:3000/home'
                                 }}>Sign Up</Button>
                             </div>
                         </div>
