@@ -18,10 +18,10 @@ function Login(){
             alert(response.data);
             if(response.data === 'User can proceed!!!'){
                 localStorage.setItem('usercap', email);
-                window.location = 'http://localhost:3000/storage';
+                window.location = 'https://capture-img.herokuapp.com/storage';
             }
             else{
-                window.location = 'http://localhost:3000/err';
+                window.location = 'https://capture-img.herokuapp.com/err';
             }
         })
     }
@@ -99,7 +99,7 @@ function Login(){
                             <br></br>
                             <div className="col-10 col-sm-5">
                                 <Button onClick={() => {
-                                    window.location = 'http://localhost:3000/home'
+                                    window.location = 'https://capture-img.herokuapp.com/home'
                                 }}>Sign Up</Button>
                             </div>
                         </div>

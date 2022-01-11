@@ -64,7 +64,7 @@ function Shared(props){
                     <BreadcrumbItem><a href="/recieved">Friends</a></BreadcrumbItem>
                     <BreadcrumbItem><Button className="btn btn-danger " onClick={() => {
                             localStorage.removeItem('usercap');
-                            window.location = 'http://localhost:3000/login';
+                            window.location = 'https://capture-img.herokuapp.com/login';
                     }} >Logout</Button></BreadcrumbItem>
                 </Breadcrumb>
                 <br></br>

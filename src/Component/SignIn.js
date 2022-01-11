@@ -29,7 +29,7 @@ function SignIn(){
                 alert(response);
                 localStorage.setItem("usercap", user);
                 localStorage.setItem("passcap",password);
-                window.location = 'http://localhost:3000/storage';
+                window.location = 'https://capture-img.herokuapp.com/storage';
                 
             }
         })

@@ -31,7 +31,7 @@ function Storage(props){
     const[toggle, setToggle] = useState(false); 
     const handleLogout = () => {
         localStorage.removeItem('usercap');
-        window.location = 'http://localhost:3000/login';
+        window.location = 'https://capture-img.herokuapp.com/login';
     }
     const [caption, setCaption] = useState("");
     const [img, setImg] = useState(null);
