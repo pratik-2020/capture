@@ -98,7 +98,8 @@ function Shared(props){
                                                         }
                                                     })
                                                 }
-                                                } style={{background:'white', color:'black', border:'0px'}}>{e.name}</Button>
+                                                }
+                                                href="#cht" style={{background:'white', color:'black', border:'0px'}}>{e.name}</Button>
                                             </ListGroupItemHeading>
                                         </ListGroupItem>
                                     );
@@ -153,7 +154,7 @@ function Shared(props){
                             }
                         </ListGroup>
                     </div>
-                    <div className='col-md-8 d-none d-sm-block'>
+                    <div className='col-md-8'>
                     <br></br>
                         <div className='contianer'>
                             <div className='row'>
@@ -161,7 +162,7 @@ function Shared(props){
                                     {
                                         chat.map((e,key) => {
                                             return(
-                                                <Card key={key} style={{backgroundColor: `${ () => {
+                                                <Card id='cht' key={key} style={{backgroundColor: `${ () => {
                                                     if(e.sender === localStorage.getItem('usercap')){
                                                         return 'green';
                                                     }
