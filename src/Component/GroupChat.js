@@ -41,7 +41,7 @@ function GroupChat() {
             }).then((response) => {
                 setToggle(!toggle);
                 alert(response.data+" the data shared is not permanently save it if needed!!!!");
-                window.location = "http://localhost:3000/grpcht"
+                window.location = "https://capture-img.herokuapp.com/grpcht"
             })
         }
     }
@@ -204,7 +204,7 @@ function GroupChat() {
                                                         imgid : e.imgid
                                                     }).then((response) => {
                                                         alert(response.data);
-                                                        window.location = "http://localhost:3000/grpcht"
+                                                        window.location = "https://capture-img.herokuapp.com/grpcht"
                                                     }) //AiOutlineDownload Thanos121641980956400
                                                 }}  />
                                                     </div>
