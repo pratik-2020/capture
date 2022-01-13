@@ -118,7 +118,7 @@ function GroupChat() {
                                     <div className='col-8 col-md-4'>
                                         <Button onClick={() => {
                                             axios.post("https://capture-img-server.herokuapp.com/crtgrp",{
-                                                adm : localStorage.getItem('uercap')
+                                                adm : localStorage.getItem('usercap')
                                             }).then((response) => {
                                                 setGrp(response.data);
                                                 alert("The name of group created is : "+grp);
