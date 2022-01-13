@@ -29,6 +29,8 @@ function SignIn(){
                 alert(response);
                 localStorage.setItem("usercap", user);
                 localStorage.setItem("passcap",password);
+                localStorage.setItem('fndcap', '');
+                localStorage.setItem('grpcap', '');
                 window.location = 'https://capture-img.herokuapp.com/storage';
                 
             }

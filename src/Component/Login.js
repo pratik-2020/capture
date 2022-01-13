@@ -18,7 +18,9 @@ function Login(){
             alert(response.data);
             if(response.data === 'User can proceed!!!'){
                 localStorage.setItem('usercap', email);
-                window.location = 'https://capture-img.herokuapp.com/storage';
+                localStorage.setItem('grpcap', '');
+                localStorage.setItem('fndcap', '');
+                window.location = 'https://capture-img.herokuapp.com/shared';
             }
             else{
                 window.location = 'https://capture-img.herokuapp.com/err';

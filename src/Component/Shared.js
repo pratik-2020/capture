@@ -9,6 +9,7 @@ import axios from 'axios';
 import FormData from 'form-data';
 import { BsFillArchiveFill } from "react-icons/bs";
 import { FaShareAlt, FaHeart, FaSnapchat } from 'react-icons/fa';
+import {AiOutlineSend} from 'react-icons/ai';
 function Shared(props){
     var f = [
         {
@@ -37,13 +38,81 @@ function Shared(props){
             setFrnd(d);
         });
     }
+    const handleRetrieveCht = () => {
+        axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
+            sender: localStorage.getItem('usercap'),
+            reciever: localStorage.getItem('fndcap')
+        }).then((response) => {
+            let g = [];
+            response.data.map((e, key) => {
+                g.push(e);
+            })
+            axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
+                sender: localStorage.getItem('fndcap'),
+                reciever: localStorage.getItem('usercap')
+            }).then((rep) => {
+                rep.data.map((j, key) => {
+                    g.push(j);
+                })
+                setChat(g);
+            })});
+    }
     useEffect(() => {
         retrievefrnd();
-        console.log(frnd);
+        setFnd(localStorage.getItem('fndcap'));
+        localStorage.setItem('grpcap', '');
+        // console.log(frnd);
+        handleRetrieveCht();
+        
     }, []);
     const [toggle, setToggle] = useState(false);
     const [fle, setFle] = useState("");
     const [cap, setCap] = useState("");
+    const [msg, setMsg] = useState("");
+    const renderSendMsg = () => {
+        if(fnd === ''){
+            return(
+                <div></div>
+            );
+        }
+        else{
+            return(
+                <div className='container'>
+                <div className='row'>
+                {
+                    chat.map((e, key) => {
+                        return(
+                            <Card key={key} className='shadow p-3 mb-5  rounded'>
+                                <CardBody>
+                                    {e.img}
+                                </CardBody>
+                            </Card>
+                        );
+                    })
+                }
+            </div>
+            <div className='row shadow p-3 mb-5  rounded'>
+                <div className='col-8 col-md-7'>
+                    <Input type='text' onChange={(e) => setMsg(e.target.value)} />
+                </div>
+                <div className='col-8 col-md-4'>
+                    <AiOutlineSend onClick={() => {
+                        axios.post('https://capture-img-server.herokuapp.com/msgsend', {
+                            sender: localStorage.getItem('usercap'),
+                            msg: msg,
+                            reciever: fnd
+                        }).then((response) => {
+                            alert(response.data);
+                            window.location = "https://capture-img.herokuapp.com/shared"
+                        })
+                    }} />
+                </div>
+            </div>
+            <br></br>
+            </div>
+            );
+        }
+    }
     return(
         <div>
             <Nav className="bg-secondary">
@@ -60,7 +129,7 @@ function Shared(props){
             <br></br>
                 <Breadcrumb>
                     <BreadcrumbItem><a href="/shared">Shared</a></BreadcrumbItem>
-                    <BreadcrumbItem active><a href="/storage">Storage</a></BreadcrumbItem>
+                    <BreadcrumbItem active><a href="/grpcht">Group Chat</a></BreadcrumbItem>
                     <BreadcrumbItem><a href="/recieved">Friends</a></BreadcrumbItem>
                     <BreadcrumbItem><Button className="btn btn-danger " onClick={() => {
                             localStorage.removeItem('usercap');
@@ -112,7 +181,7 @@ function Shared(props){
                     </ModalFooter>
                 </Modal>
                 <div className='row'>
-                    <div className='col-10 col-md-3'>
+                    <div className='col-10 col-md-3 shadow p-3 mb-5 bg-white rounded'>
                         <ListGroup>
                             <h2>Friends</h2>
                             {
@@ -121,6 +190,7 @@ function Shared(props){
                                         <ListGroupItem key={key}>
                                             <ListGroupItemHeading><Button style={{backgroundColor:'white', border:'0px', color:"black"}} onClick={() => {
                                                 setFnd(e.name);
+                                                localStorage.setItem('fndcap', e.name);
                                                 console.log(fnd);
                                                 axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
                                                     sender: localStorage.getItem('usercap'),
@@ -156,7 +226,7 @@ function Shared(props){
                     </div>
                     <div className='col-md-8'>
                     <br></br>
-                        <div className='contianer'>
+                        {/* <div className='contianer'>
                             <div className='row'>
                                 <div className='col-10 col-md-4'>
                                     {
@@ -216,7 +286,8 @@ function Shared(props){
                                     }
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
+                        {renderSendMsg()}
                     </div>
                 </div>
             </div>

@@ -94,6 +94,8 @@ function Recieve(){
     }
     useEffect(() => {
         retrieveusers();
+        localStorage.setItem('fndcap', '');
+        localStorage.setItem('grpcap', '');
         console.log(users);
     }, []);
     useEffect(() => {
@@ -117,7 +119,7 @@ const linkName=readmore?'read less ':'read more '
             <br></br>
             <Breadcrumb>
                 <BreadcrumbItem><a href="/shared">Shared</a></BreadcrumbItem>
-                <BreadcrumbItem><a href="/storage">Storage</a></BreadcrumbItem>
+                <BreadcrumbItem><a href="/grpcht">Group Chat</a></BreadcrumbItem>
                 <BreadcrumbItem active><a href="recieved">Friends</a></BreadcrumbItem>
                 <BreadcrumbItem><Button className="btn btn-danger " onClick={handleLogout}>Logout</Button></BreadcrumbItem>
             </Breadcrumb>

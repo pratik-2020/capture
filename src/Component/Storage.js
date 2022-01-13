@@ -10,23 +10,7 @@ import { BsFillArchiveFill } from "react-icons/bs";
 import FormData from 'form-data';
 function Storage(props){
     const [email, setEmail] = useState("");
-    var d = [
-        {
-            id:1,
-            caption: "Awesome image",
-            img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png"
-        },
-        {
-            id:2,
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id:3,
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        }
-    ]
+    var d = []
     const [imgColl, setImgColl] = useState([]);
     const[toggle, setToggle] = useState(false); 
     const handleLogout = () => {
@@ -69,6 +53,7 @@ function Storage(props){
     const [frnd, setFrnd] = useState([]);
     useEffect(() => {
         handleretrieve();
+        console.log(imgColl);
     }, [imgColl, fl]);
     return(
             <div>
