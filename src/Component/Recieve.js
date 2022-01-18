@@ -65,11 +65,11 @@ function Recieve(){
     const [friends, setFriends] = useState([]);
     const handleLogout = () => {
         localStorage.removeItem('usercap');
-        window.location = 'https://capture-img.herokuapp.com/login';
+        window.location = 'http://localhost:3000/login';
     }
     const retrieveusers = () => {
         let d = [];
-        axios.get('https://capture-img-server.herokuapp.com/getusers').then((response) => {
+        axios.get('http://localhost:3001/getusers').then((response) => {
             // console.log(response.data);
             response.data.map((e,key) => {
                 // d.append(e.user);
@@ -82,7 +82,7 @@ function Recieve(){
     }
     const retrievefrnds = () => {
         let f = []
-        axios.post('https://capture-img-server.herokuapp.com/getfrnd', {
+        axios.post('http://localhost:3001/getfrnd', {
             user: localStorage.getItem('usercap')
         }).then((response) => {
             response.data.map((e,key) => {
@@ -142,7 +142,7 @@ const linkName=readmore?'read less ':'read more '
                                     <ListGroupItem key={key} className='shadow p-3 mb-5 bg-white rounded'>
                                         <ListGroupItemHeading>{e.name}</ListGroupItemHeading>
                                         <ListGroupItem>{e.status==='pending'? <div><Button onClick={() => {
-                                            axios.post('https://capture-img-server.herokuapp.com/respfrnd', {
+                                            axios.post('http://localhost:3001/respfrnd', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.name,
                                                 resp: 'Confirm'
@@ -150,7 +150,7 @@ const linkName=readmore?'read less ':'read more '
                                                 alert(response.data);
                                             })
                                         }}>Confirm</Button><Button onClick={() => {
-                                            axios.post('https://capture-img-server.herokuapp.com/respfrnd', {
+                                            axios.post('http://localhost:3001/respfrnd', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.name,
                                                 resp: 'Delete'
@@ -178,7 +178,7 @@ const linkName=readmore?'read less ':'read more '
                                     <ListGroupItem key={key} className='shadow p-3 mb-5 bg-white rounded'>
                                         <ListGroupItemHeading>{e.user}</ListGroupItemHeading>
                                         <ListGroupItem><Button onClick={() => {
-                                            axios.post('https://capture-img-server.herokuapp.com/sendfrndreq', {
+                                            axios.post('http://localhost:3001/sendfrndreq', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.user
                                             }).then((response) => {

@@ -18,12 +18,13 @@ function GroupChat() {
     const [toggle, setToggle] = useState(false);
     const [pr, setPr] = useState("");
     const handleRetrievecht = () => {
-        // if(grp !== ""){
-        axios.post("https://capture-img-server.herokuapp.com/retrievestorage", {
-            user: localStorage.getItem('grpcap')
+        if(grp !== ""){
+        axios.post("http://localhost:3001/retrievestorage", {
+            user: grp
         }).then((response) => {
             setChat(response.data);
         })
+    }
     }
     const handleUpload = () => {
         if(grp === ""){
@@ -35,21 +36,19 @@ function GroupChat() {
             form.append('user', grp);
             form.append('caption',caption);
             axios({
-                url: "https://capture-img-server.herokuapp.com/updimg",
+                url: "http://localhost:3001/updimg",
                 method: "POST",
                 data: form
             }).then((response) => {
                 setToggle(!toggle);
                 alert(response.data+" the data shared is not permanently save it if needed!!!!");
-                window.location = "https://capture-img.herokuapp.com/grpcht"
+                // window.location = "http://localhost:3000/grpcht"
             })
         }
     }
     useEffect(() => {
         handleRetrievecht();
-        localStorage.setItem('fndcap', '');
-        // console.log(cht);
-    }, []);
+    }, [cht]);
     return (
         <div>
             <Nav className="bg-secondary">
@@ -70,7 +69,7 @@ function GroupChat() {
                     <BreadcrumbItem><a href="/recieved">Friends</a></BreadcrumbItem>
                     <BreadcrumbItem><Button className="btn btn-danger " onClick={() => {
                             localStorage.removeItem('usercap');
-                            window.location = 'https://capture-img.herokuapp.com/login';
+                            window.location = 'http://localhost:3000/login';
                     }} >Logout</Button></BreadcrumbItem>
                 </Breadcrumb>
                 <br></br>
@@ -97,7 +96,7 @@ function GroupChat() {
                                                 alert("Please enter a group name");
                                             }
                                             else{
-                                                axios.post("https://capture-img-server.herokuapp.com/retrievestorage", {
+                                                axios.post("http://localhost:3001/retrievestorage", {
                                                     user: localStorage.getItem('grpcap')
                                                 }).then((response) => {
                                                     if(response.data.length !== 0 && grp !== ""){
@@ -117,11 +116,11 @@ function GroupChat() {
                                     <br></br>
                                     <div className='col-8 col-md-4'>
                                         <Button onClick={() => {
-                                            axios.post("https://capture-img-server.herokuapp.com/crtgrp",{
+                                            axios.post("http://localhost:3001/crtgrp",{
                                                 adm : localStorage.getItem('usercap')
                                             }).then((response) => {
                                                 setGrp(response.data);
-                                                alert("The name of group created is : "+grp);
+                                                alert("The name of group created is : "+response.data+" please join this group in order to share messages!!!");
                                             });
                                             localStorage.setItem('grpcap', grp);
                                         }}>Create Group</Button>
@@ -182,7 +181,7 @@ function GroupChat() {
                                 return(
                                     <Card key={key}  className='shadow p-3 mb-5  rounded'>
                                         <CardHeader>
-                                            <CardImg src={'https://capture-img-server.herokuapp.com/uploads/'+e.filename} />
+                                            <CardImg src={'http://localhost:3001/uploads/'+e.filename} />
                                         </CardHeader>
                                         <CardBody>
                                             <CardText>
@@ -200,11 +199,11 @@ function GroupChat() {
                                                 <div className='row'>
                                                     <div className='col-2'>
                                                         <BsFillArchiveFill onClick={()=> {
-                                                    axios.post('https://capture-img-server.herokuapp.com/delete/img', {
+                                                    axios.post('http://localhost:3001/delete/img', {
                                                         imgid : e.imgid
                                                     }).then((response) => {
                                                         alert(response.data);
-                                                        window.location = "https://capture-img.herokuapp.com/grpcht"
+                                                        // window.location = "http://localhost:3000/grpcht"
                                                     }) //AiOutlineDownload Thanos121641980956400
                                                 }}  />
                                                     </div>

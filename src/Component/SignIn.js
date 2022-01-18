@@ -4,11 +4,8 @@ import {Form, FormGroup, Label, Input, Button, Card, CardImg} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginVectorArt from './Assets/LoginVectorArt.jpg';
 import axios, {Axios} from 'axios';
-//import emailjs from 'emailjs-com';
 import { Redirect, Route, Link, useHistory } from 'react-router';
-// import { useNavigate } from "react-router-dom"
 import firebase from 'firebase';
-//const sendEmail = require('../Node Modules/email');
 function SignIn(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,7 +13,7 @@ function SignIn(){
     const [user, setUser] = useState("");
 
     const handlesignin = () => {
-        axios.post('https://capture-img-server.herokuapp.com/otpverification', {
+        axios.post('http://localhost:3001/otpverification', {
             user: user,
             pass: password,
             state: state,
@@ -31,7 +28,7 @@ function SignIn(){
                 localStorage.setItem("passcap",password);
                 localStorage.setItem('fndcap', '');
                 localStorage.setItem('grpcap', '');
-                window.location = 'https://capture-img.herokuapp.com/storage';
+                window.location = 'http://localhost:3000/shared';
                 
             }
         })
