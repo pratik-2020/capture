@@ -15,7 +15,7 @@ function Storage(props){
     const[toggle, setToggle] = useState(false); 
     const handleLogout = () => {
         localStorage.removeItem('usercap');
-        window.location = 'http://localhost:3000/login';
+        window.location = 'https://capture-img.herokuapp.com/login';
     }
     const [caption, setCaption] = useState("");
     const [img, setImg] = useState(null);
@@ -35,7 +35,7 @@ function Storage(props){
         form.append('caption',caption);
         const user = localStorage.getItem("usercap");
         axios({
-            url: "http://localhost:3001/updimg",
+            url: "https://capture-img-server.herokuapp.com/updimg",
             method: "POST",
             data: form
         }).then((response) => {
@@ -44,7 +44,7 @@ function Storage(props){
     }
     const [cap, setCap] = useState("");
     const handleretrieve = () => {
-        axios.post('http://localhost:3001/retrievestorage', {
+        axios.post('https://capture-img-server.herokuapp.com/retrievestorage', {
             user: localStorage.getItem('usercap')
         }).then((response) => {
             setImgColl(response.data);
@@ -87,7 +87,7 @@ function Storage(props){
                                                     console.log(fl);
                                                     let f = fl;
                                                     let g = cap;
-                                                    axios.post('http://localhost:3001/shareimg', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/shareimg', {
                                                         sender: localStorage.getItem('usercap'),
                                                         reciever: e.name,
                                                         caption: g,
@@ -170,7 +170,7 @@ function Storage(props){
                                 <div key={key} className="col-10 col-sm-4">
                                     <Card className="shadow p-3 mb-5  rounded">
                                         <CardHeader>
-                                        <CardImg src={'http://localhost:3001/uploads/'+e.filename} />
+                                        <CardImg src={'https://capture-img-server.herokuapp.com/uploads/'+e.filename} />
                                         </CardHeader>
                                         <CardBody>
                                         <CardText className="h5">{e.caption}</CardText>
@@ -178,7 +178,7 @@ function Storage(props){
                                             <div className="row">
                                                 <div className="col-2 col-sm-2">
                                                 <i><FaShareAlt onClick={() => {
-                                                    axios.post('http://localhost:3001/getfrnd', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/getfrnd', {
                                                         user: localStorage.getItem('usercap')
                                                     }).then((response) => {
                                                         let f = []
@@ -194,7 +194,7 @@ function Storage(props){
                                                 </div>
                                                 <div className="col-2 col-sm-2">
                                                 <BsFillArchiveFill onClick={()=> {
-                                                    axios.post('http://localhost:3001/delete/img', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/delete/img', {
                                                         imgid : e.imgid
                                                     }).then((response) => {
                                                         alert(response.data);

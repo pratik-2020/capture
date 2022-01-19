@@ -19,7 +19,7 @@ function GroupChat() {
     const [pr, setPr] = useState("");
     const handleRetrievecht = () => {
         if(grp !== ""){
-        axios.post("http://localhost:3001/retrievestorage", {
+        axios.post("https://capture-img-server.herokuapp.com/retrievestorage", {
             user: grp
         }).then((response) => {
             setChat(response.data);
@@ -36,13 +36,14 @@ function GroupChat() {
             form.append('user', grp);
             form.append('caption',caption);
             axios({
-                url: "http://localhost:3001/updimg",
+                url: "https://capture-img-server.herokuapp.com/updimg",
                 method: "POST",
                 data: form
             }).then((response) => {
                 setToggle(!toggle);
                 alert(response.data+" the data shared is not permanently save it if needed!!!!");
-                // window.location = "http://localhost:3000/grpcht"
+                handleRetrievecht();
+                // window.location = "https://capture-img.herokuapp.com/grpcht"
             })
         }
     }
@@ -69,7 +70,7 @@ function GroupChat() {
                     <BreadcrumbItem><a href="/recieved">Friends</a></BreadcrumbItem>
                     <BreadcrumbItem><Button className="btn btn-danger " onClick={() => {
                             localStorage.removeItem('usercap');
-                            window.location = 'http://localhost:3000/login';
+                            window.location = 'https://capture-img.herokuapp.com/login';
                     }} >Logout</Button></BreadcrumbItem>
                 </Breadcrumb>
                 <br></br>
@@ -96,7 +97,7 @@ function GroupChat() {
                                                 alert("Please enter a group name");
                                             }
                                             else{
-                                                axios.post("http://localhost:3001/retrievestorage", {
+                                                axios.post("https://capture-img-server.herokuapp.com/retrievestorage", {
                                                     user: localStorage.getItem('grpcap')
                                                 }).then((response) => {
                                                     if(response.data.length !== 0 && grp !== ""){
@@ -116,7 +117,7 @@ function GroupChat() {
                                     <br></br>
                                     <div className='col-8 col-md-4'>
                                         <Button onClick={() => {
-                                            axios.post("http://localhost:3001/crtgrp",{
+                                            axios.post("https://capture-img-server.herokuapp.com/crtgrp",{
                                                 adm : localStorage.getItem('usercap')
                                             }).then((response) => {
                                                 setGrp(response.data);
@@ -181,7 +182,7 @@ function GroupChat() {
                                 return(
                                     <Card key={key}  className='shadow p-3 mb-5  rounded'>
                                         <CardHeader>
-                                            <CardImg src={'http://localhost:3001/uploads/'+e.filename} />
+                                            <CardImg src={'https://capture-img-server.herokuapp.com/uploads/'+e.filename} />
                                         </CardHeader>
                                         <CardBody>
                                             <CardText>
@@ -199,11 +200,11 @@ function GroupChat() {
                                                 <div className='row'>
                                                     <div className='col-2'>
                                                         <BsFillArchiveFill onClick={()=> {
-                                                    axios.post('http://localhost:3001/delete/img', {
+                                                    axios.post('https://capture-img-server.herokuapp.com/delete/img', {
                                                         imgid : e.imgid
                                                     }).then((response) => {
                                                         alert(response.data);
-                                                        // window.location = "http://localhost:3000/grpcht"
+                                                        // window.location = "https://capture-img.herokuapp.com/grpcht"
                                                     }) //AiOutlineDownload Thanos121641980956400
                                                 }}  />
                                                     </div>

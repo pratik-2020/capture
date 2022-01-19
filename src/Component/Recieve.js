@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Card, CardBody, CardImg, CardFooter, CardText, Button, CardHeader, Nav,  NavbarBrand, Breadcrumb, BreadcrumbItem, ListGroup, ListGroupItem, ListGroupItemHeading} from 'reactstrap';
+import {Card, CardBody, CardImg, CardFooter, CardText, Button, CardHeader, Nav,  NavbarBrand, Breadcrumb, BreadcrumbItem, ListGroup, ListGroupItem, ListGroupItemHeading, Input} from 'reactstrap';
 import { FaShareAlt, FaHeart } from 'react-icons/fa';
 import {useState, useEffect} from 'react';
 import firebase from 'firebase';
@@ -13,49 +13,6 @@ function Recieve(){
             comment : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             caption: "Awesome image",
             img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png"
-        },
-        {
-            id: 1,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            
-            id: 2,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id: 3,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id: 4,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id: 5,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id: 6,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
-        },
-        {
-            id: 7,
-            comment : "Comment",
-            caption: "Awesome image",
-            img: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fhdwallpaperim.com%2Fwp-content%2Fuploads%2F2017%2F08%2F25%2F461264-reactJS-Facebook-JavaScript-minimalism-artwork-simple_background.jpg&f=1&nofb=1"
         }
     ]
     const [email, setEmail] = useState("");
@@ -63,17 +20,19 @@ function Recieve(){
     const [imgId, setImgId] = useState(-1);
     const [users, setUsers] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [search, setSearch] = useState("");
+    const [searchfnd, setSearchFrnd] = useState("");
     const handleLogout = () => {
         localStorage.removeItem('usercap');
-        window.location = 'http://localhost:3000/login';
+        window.location = 'https://capture-img.herokuapp.com/login';
     }
     const retrieveusers = () => {
         let d = [];
-        axios.get('http://localhost:3001/getusers').then((response) => {
+        axios.get('https://capture-img-server.herokuapp.com/getusers').then((response) => {
             // console.log(response.data);
             response.data.map((e,key) => {
                 // d.append(e.user);
-                if(e.user !== localStorage.getItem('usercap')){
+                if(e.user !== localStorage.getItem('usercap') && e.status !== 'Delete'){
                     d.push(e);
                 }
             })
@@ -82,9 +41,10 @@ function Recieve(){
     }
     const retrievefrnds = () => {
         let f = []
-        axios.post('http://localhost:3001/getfrnd', {
+        axios.post('https://capture-img-server.herokuapp.com/getfrnd', {
             user: localStorage.getItem('usercap')
         }).then((response) => {
+            console.log(response.data);
             response.data.map((e,key) => {
                 // e.append(e.user);
                 f.push(e);
@@ -94,14 +54,10 @@ function Recieve(){
     }
     useEffect(() => {
         retrieveusers();
+        retrievefrnds();
         localStorage.setItem('fndcap', '');
         localStorage.setItem('grpcap', '');
-        console.log(users);
-    }, []);
-    useEffect(() => {
-        retrievefrnds();
-        console.log(friends);
-    }, []);
+    }, [friends, users]);
 const linkName=readmore?'read less ':'read more '
     return(
         <div>
@@ -136,13 +92,23 @@ const linkName=readmore?'read less ':'read more '
                 <h3>Friends</h3>
                 <div className='col-9'>
                     <ListGroup>
+                        <ListGroupItem className='shadow p-3 mb-5 bg-white rounded'>
+                            <Input placeholder='Search Friends' onChange={(e) => setSearchFrnd(e.target.value)} />
+                        </ListGroupItem>
                         {
-                            friends.map((e,key) => {
+                            friends.filter((val) => {
+                                if(searchfnd === ""){
+                                    return val;
+                                }
+                                else if(val.name.toLowerCase().includes(val.name.toLowerCase())){
+                                    return val;
+                                }
+                            }).map((e,key) => {
                                 return(
                                     <ListGroupItem key={key} className='shadow p-3 mb-5 bg-white rounded'>
                                         <ListGroupItemHeading>{e.name}</ListGroupItemHeading>
                                         <ListGroupItem>{e.status==='pending'? <div><Button onClick={() => {
-                                            axios.post('http://localhost:3001/respfrnd', {
+                                            axios.post('https://capture-img-server.herokuapp.com/respfrnd', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.name,
                                                 resp: 'Confirm'
@@ -150,7 +116,7 @@ const linkName=readmore?'read less ':'read more '
                                                 alert(response.data);
                                             })
                                         }}>Confirm</Button><Button onClick={() => {
-                                            axios.post('http://localhost:3001/respfrnd', {
+                                            axios.post('https://capture-img-server.herokuapp.com/respfrnd', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.name,
                                                 resp: 'Delete'
@@ -172,13 +138,23 @@ const linkName=readmore?'read less ':'read more '
                 <h3>All Users</h3>
                 <div className='col-9'>
                     <ListGroup>
+                        <ListGroupItem className='shadow p-3 mb-5 bg-white rounded'>
+                            <Input placeholder="Search" onChange={(e) => setSearch(e.target.value)} />
+                        </ListGroupItem>
                         {
-                            users.map((e,key) => {
+                            users.filter((val) => {
+                                if(val.user.toLowerCase().includes(search.toLowerCase())){
+                                    return val;
+                                }
+                                else if(search === ""){
+                                    return val;
+                                }
+                            }).map((e,key) => {
                                 return(
                                     <ListGroupItem key={key} className='shadow p-3 mb-5 bg-white rounded'>
                                         <ListGroupItemHeading>{e.user}</ListGroupItemHeading>
                                         <ListGroupItem><Button onClick={() => {
-                                            axios.post('http://localhost:3001/sendfrndreq', {
+                                            axios.post('https://capture-img-server.herokuapp.com/sendfrndreq', {
                                                 sender: localStorage.getItem('usercap'),
                                                 reciever: e.user
                                             }).then((response) => {

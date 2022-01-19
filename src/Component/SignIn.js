@@ -13,7 +13,7 @@ function SignIn(){
     const [user, setUser] = useState("");
 
     const handlesignin = () => {
-        axios.post('http://localhost:3001/otpverification', {
+        axios.post('https://capture-img-server.herokuapp.com/otpverification', {
             user: user,
             pass: password,
             state: state,
@@ -28,7 +28,7 @@ function SignIn(){
                 localStorage.setItem("passcap",password);
                 localStorage.setItem('fndcap', '');
                 localStorage.setItem('grpcap', '');
-                window.location = 'http://localhost:3000/shared';
+                window.location = 'https://capture-img.herokuapp.com/shared';
                 
             }
         })

@@ -11,38 +11,24 @@ function Login(){
     const [password, setPassword] = useState("");
     const [retpass, setRetpass] = useState("");
     const handleLogin = () => {
-        axios.post('http://localhost:3001/login', {
+        axios.post('https://capture-img-server.herokuapp.com/login', {
             user: email,
             pass: password
         }).then((response) => {
             alert(response.data);
-            if(response.data === 'User can proceed!!!'){
+            console.log(response);
+            if(response.data === "User can proceed!!!"){
                 localStorage.setItem('usercap', email);
                 localStorage.setItem('grpcap', '');
                 localStorage.setItem('fndcap', '');
-                window.location = 'http://localhost:3000/shared';
+                window.location = 'https://capture-img.herokuapp.com/shared';
             }
             else{
-                window.location = 'http://localhost:3000/err';
+                localStorage.setItem('err', response.data);
+                window.location = 'https://capture-img.herokuapp.com/err';
             }
         })
     }
-    // (() => {
-    //     var cors_api_host = 'localhost:3001';
-    //     var cors_api_url = 'https://' + cors_api_host + '/';
-    //     var slice = [].slice;
-    //     var origin = window.location.protocol + '//' + window.location.host;
-    //     var open = XMLHttpRequest.prototype.open;
-    //     XMLHttpRequest.prototype.open = function() {
-    //         var args = slice.call(arguments);
-    //         var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
-    //         if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
-    //             targetOrigin[1] !== cors_api_host) {
-    //             args[1] = cors_api_url + args[1];
-    //         }
-    //         return open.apply(this, args);
-    //     };
-    // });
     return(
         <div className="container">
             <br></br>
@@ -91,7 +77,7 @@ function Login(){
                             </div>
                         </div>
                     </FormGroup>
-                    <br></br>               
+                    <br></br>
                     <br></br>
                         <FormGroup>
                         <div className="row justify-content-center">
@@ -101,7 +87,7 @@ function Login(){
                             <br></br>
                             <div className="col-10 col-sm-5">
                                 <Button onClick={() => {
-                                    window.location = 'http://localhost:3000/home'
+                                    window.location = 'https://capture-img.herokuapp.com/home'
                                 }}>Sign Up</Button>
                             </div>
                         </div>
