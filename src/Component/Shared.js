@@ -48,15 +48,8 @@ function Shared(props){
             response.data.map((e, key) => {
                 g.push(e);
             })
-            axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
-                sender: localStorage.getItem('fndcap'),
-                reciever: localStorage.getItem('usercap')
-            }).then((rep) => {
-                rep.data.map((j, key) => {
-                    g.push(j);
-                })
-                setChat(g);
-            })});
+            setChat(g);
+        });
     }
     useEffect(() => {
         retrievefrnd();
@@ -76,19 +69,28 @@ function Shared(props){
         else{
             return(
                 <div className='container'>
-                <div className='row'>
-                {
-                    chat.map((e, key) => {
-                        return(
-                            <Card key={key} className='shadow p-3 mb-5  rounded'>
-                                <CardBody>
-                                    {e.img}
-                                </CardBody>
-                            </Card>
-                        );
-                    })
-                }
-            </div>
+                    {
+                        chat.map((e,key) => {
+                            if(e.sender.toLowerCase() === localStorage.getItem('usercap')){
+                                return(
+                                    <div key={key} className='row justify-content-end mb-4'>
+                                        <div className='col-auto col-md-auto col-md-6 align-self-end shadow' style={{backgroundColor: "wheat"}}>
+                                            {e.img}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                            else{
+                                return(
+                                    <div key={key} className='row justify-content-start mb-4'>
+                                        <div className='col-auto align-self-start shadow'>
+                                            {e.img}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        })
+                    }
             <div className='row shadow p-3 mb-5  rounded'>
                 <div className='col-8 col-md-7'>
                     <Input type='text' onChange={(e) => setMsg(e.target.value)} />
@@ -198,22 +200,13 @@ function Shared(props){
                                                     response.data.map((e, key) => {
                                                         g.push(e);
                                                     })
-                                                    axios.post('https://capture-img-server.herokuapp.com/retrieveshared', {
-                                                        sender: e.name,
-                                                        reciever: localStorage.getItem('usercap')
-                                                    }).then((rep) => {
-                                                        rep.data.map((j, key) => {
-                                                            g.push(j);
-                                                        })
-                                                        setChat(g);
-                                                    })
+                                                    setChat(g);
                                                     axios.post('https://capture-img-server.herokuapp.com/msg/seen', {
                                                         reciever: localStorage.getItem('usercap'),
                                                         sender: e.name
                                                     }).then((response) => {
                                                         alert(response.data);
                                                     })
-                                                    console.log(chat);
                                                 })
                                             }}><strong>{e.name}</strong></Button></ListGroupItemHeading>
                                         </ListGroupItem>
